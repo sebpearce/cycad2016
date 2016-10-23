@@ -1,0 +1,22 @@
+// define palette here
+
+// $palette-black: #222;
+// $palette-blue: blah blah
+
+$base-text-color: #333;
+$base-font-family: 'Helvetica Neue';
+$base-line-height: 1.5;
+
+
+body {
+  margin: 0;
+  color: $base-text-color;
+  font-family: $base-font-family;
+  line-height: $base-line-height;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+
