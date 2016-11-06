@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.App exposing (beginnerProgram)
 import Date exposing (..)
+import Dict exposing (..)
 
 
 -- import Html.Events exposing (onInput)
@@ -69,36 +70,26 @@ initialModel =
           }
         ]
     , expenseCategories =
-        [ { id = 1
-          , name = "Rent"
-          }
-        , { id = 2
-          , name = "Groceries"
-          }
-        , { id = 3
-          , name = "Eating out"
-          }
-        ]
+        Dict.fromList [ ( 1, "Rent" ), ( 2, "Groceries" ), ( 3, "Eating out" ) ]
     , incomeCategories =
-        [ { id = 1
-          , name = "Salary"
-          }
-        , { id = 2
-          , name = "Partner's salary"
-          }
-        , { id = 3
-          , name = "Gifts"
-          }
-        ]
+        Dict.fromList [ ( 1, "Salary" ), ( 2, "Partner's salary" ), ( 3, "Gifts" ) ]
     }
 
 
 type alias Model =
     { expenseTransactions : List ExpensesForOneDay
     , incomeTransactions : List IncomeTransaction
-    , expenseCategories : List ExpenseCategory
-    , incomeCategories : List IncomeCategory
+    , expenseCategories : DictOfCategories
+    , incomeCategories : DictOfCategories
     }
+
+
+type alias DictOfCategories =
+    Dict Int String
+
+
+type alias ListOfCategories =
+    List String
 
 
 type alias ExpensesForOneDay =
@@ -159,7 +150,7 @@ renderExpenseRow : ExpenseTransaction -> Html msg
 renderExpenseRow transaction =
     div [ class "expense-day__row" ]
         [ div [ class "expense-day__row__amt" ] [ text (toString transaction.amount) ]
-        , div [ class "expense-day__row__cat" ] [ text (toString transaction.category) ]
+        , div [ class "expense-day__row__cat" ] [ text (toString (transaction.category)) ]
         , div [ class "expense-day__row__desc" ] [ text transaction.description ]
         ]
 
@@ -183,7 +174,7 @@ renderExpensesTable days =
         renderedDays =
             List.map renderExpensesForOneDay days
     in
-        table [] renderedDays
+        div [ class "expenses-table" ] renderedDays
 
 
 view : Model -> Html msg
