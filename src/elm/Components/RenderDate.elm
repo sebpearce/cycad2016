@@ -1,4 +1,4 @@
-module Components.RenderDate exposing (..)
+module Components.RenderDate exposing (renderDate)
 
 import Date exposing (..)
 import String

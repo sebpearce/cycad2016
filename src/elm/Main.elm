@@ -8,11 +8,9 @@ import Dict exposing (..)
 
 
 -- import Html.Events exposing (onInput)
--- import String exposing (toList, fromList)
--- import Char exposing (toCode, fromCode)
 
-import List exposing (map)
-import Components.RenderDate exposing (renderDate)
+import Model exposing (..)
+import Components.ExpensesTable exposing (renderExpensesTable)
 
 
 -- MODEL
@@ -76,57 +74,6 @@ initialModel =
     }
 
 
-type alias Model =
-    { expenseTransactions : List ExpensesForOneDay
-    , incomeTransactions : List IncomeTransaction
-    , expenseCategories : DictOfCategories
-    , incomeCategories : DictOfCategories
-    }
-
-
-type alias DictOfCategories =
-    Dict Int String
-
-
-type alias ListOfCategories =
-    List String
-
-
-type alias ExpensesForOneDay =
-    { date : Date
-    , transactions : List ExpenseTransaction
-    }
-
-
-type alias ExpenseTransaction =
-    { id : Int
-    , amount : Float
-    , description : String
-    , category : Int
-    }
-
-
-type alias IncomeTransaction =
-    { id : Int
-    , date : Date
-    , amount : Float
-    , description : String
-    , category : Int
-    }
-
-
-type alias IncomeCategory =
-    { id : Int
-    , name : String
-    }
-
-
-type alias ExpenseCategory =
-    { id : Int
-    , name : String
-    }
-
-
 
 -- UPDATE
 
@@ -146,40 +93,7 @@ update msg model =
 -- VIEW
 
 
-renderExpenseRow : ExpenseTransaction -> Html msg
-renderExpenseRow transaction =
-    div [ class "expense-day__row" ]
-        [ div [ class "expense-day__row__amt" ] [ text (toString transaction.amount) ]
-        , div [ class "expense-day__row__cat" ] [ text (toString (transaction.category)) ]
-        , div [ class "expense-day__row__desc" ] [ text transaction.description ]
-        ]
-
-
-renderExpensesForOneDay : ExpensesForOneDay -> Html msg
-renderExpensesForOneDay day =
-    let
-        dayTransactions =
-            List.map renderExpenseRow day.transactions
-    in
-        div [ class "expense-day" ]
-            [ div [ class "expense-day__date" ] [ text (renderDate day.date) ]
-            , div [ class "expense-day__transactions" ]
-                dayTransactions
-            ]
-
-
-renderExpensesTable : List ExpensesForOneDay -> Html msg
-renderExpensesTable days =
-    let
-        renderedDays =
-            List.map renderExpensesForOneDay days
-    in
-        div [ class "expenses-table" ] renderedDays
-
-
 view : Model -> Html msg
 view model =
-    div [ class "container" ]
-        [ h1 [] [ text "Cycad" ]
-        , renderExpensesTable model.expenseTransactions
-        ]
+    div [ class "main-container" ]
+        [ renderExpensesTable model ]
