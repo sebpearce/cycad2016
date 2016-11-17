@@ -1,13 +1,10 @@
 module Model exposing (..)
 
 import Components.DictOfCategories exposing (DictOfCategories)
-import Components.IncomeTransaction exposing (IncomeTransaction)
-import Components.ExpenseTransaction exposing (ExpenseTransaction, ExpensesForOneDay)
+import Components.Transaction exposing (Transaction, TransactionsForOneDay)
 
 
 type alias Model =
-    { expenseTransactions : List ExpensesForOneDay
-    , incomeTransactions : List IncomeTransaction
-    , expenseCategories : DictOfCategories
-    , incomeCategories : DictOfCategories
+    { transactions : List TransactionsForOneDay
+    , categories : DictOfCategories
     }

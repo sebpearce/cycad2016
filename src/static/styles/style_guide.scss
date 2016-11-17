@@ -4,9 +4,12 @@
 // $palette-blue: blah blah
 
 $base-text-color: #333;
-$base-font-family: 'Helvetica Neue';
+$base-font-family: 'Open Sans';
 $base-line-height: 1.5;
 
+$bold: 600;
+
+$font--table-field: 12px $base-font-family;
 
 body {
   margin: 0;

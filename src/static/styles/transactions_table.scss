@@ -1,0 +1,47 @@
+.transactions-table {
+  border: 1px solid #aaa;
+}
+
+.transactions-table__day {
+  padding-bottom: 1em;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.transactions-table__day__date {
+  font-weight: $bold;
+  background: #eee;
+  padding: 0 0.5em;
+}
+
+.transactions-table__day__row {
+
+}
+
+%transactions-table__day__row__field {
+  display: inline-block;
+  min-width: 70px;
+  padding-right: 1em;
+  font: $font--table-field;
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+
+.transactions-table__day__row__amt {
+  @extend %transactions-table__day__row__field;
+  text-align: right;
+}
+
+.transactions-table__day__row__cat {
+  @extend %transactions-table__day__row__field;
+  min-width: 200px;
+}
+
+.transactions-table__day__row__desc {
+  @extend %transactions-table__day__row__field;
+  min-width: 200px;
+}
