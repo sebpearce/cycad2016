@@ -1,0 +1,38 @@
+.sidebar__container {
+  flex: 0 0 250px;
+  background: $color--sidebar-section__bg;
+  min-height: 100vh;
+}
+
+.sidebar__section {
+}
+
+.sidebar__section__link {
+  display: block;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: $color--sidebar-section__bg;
+
+  &.-selected {
+    background: $color--sidebar-section__bg--selected;
+  }
+
+  &:hover {
+    background: $color--sidebar-section__link--hover;
+  }
+
+  &.-selected:hover {
+    background: $color--sidebar-section__bg--selected;
+  }
+}
+
+.sidebar__section__title {
+  color: $color--sidebar-section__link;
+  font: $font--sidebar-section;
+  letter-spacing: 0.02em;
+}
+
+

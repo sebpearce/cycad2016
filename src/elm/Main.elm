@@ -11,6 +11,7 @@ import Dict exposing (..)
 
 import Model exposing (..)
 import Components.TransactionsTable exposing (renderTransactionsTable)
+import Components.Sidebar exposing (renderSidebar)
 
 
 -- MODEL
@@ -90,4 +91,7 @@ update msg model =
 view : Model -> Html msg
 view model =
     div [ class "main-container" ]
-        [ renderTransactionsTable model ]
+        [ renderSidebar model
+        , div [ class "content__container" ]
+            [ renderTransactionsTable model ]
+        ]

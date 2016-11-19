@@ -1,28 +1,33 @@
 // define palette here
+$palette--dark-grey: #3B3E41;
+$palette--soft-blue: #5D758E;
 
-// $palette-black: #222;
-// $palette-blue: blah blah
-
-$base-text-color: #444;
+$base-text-color: $palette--dark-grey;
 $base-font-family: 'Open Sans';
 $base-line-height: 1.5;
 
-$positive-color: hsl(100,60%,40%);
-$negative-color: $base-text-color;
+$color--positive: hsl(100,60%,40%);
+$color--negative: $base-text-color;
 
+$color--link: #00f;
 $color--date: #555;
 $color--category: #aaa;
 $color--divider: #ccc;
+$color--sidebar-section__bg: $palette--dark-grey;
+$color--sidebar-section__bg--selected: $palette--soft-blue;
+$color--sidebar-section__link: #fff;
+$color--sidebar-section__link--hover: mix(#fff, $palette--dark-grey, 5%);
 
+$weight--heavy: 700;
 $weight--bold: 600;
 $weight--light: 300;
 
-
-$font-size--small: 12px;
-$font-size--medium: 16px;
-$font-size--large: 16px;
+$font-size--small: 16px;
+$font-size--medium: 21px;
+$font-size--large: 28px;
 
 $font--table-field: $font-size--medium $base-font-family;
+$font--sidebar-section: $weight--bold $font-size--medium $base-font-family;
 
 body {
   margin: 0;
@@ -36,9 +41,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .-positive {
-  color: $positive-color;
+  color: $color--positive;
 }
 
 .-negative {
-  color: $negative-color;;
+  color: $color--negative;
 }
