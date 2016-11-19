@@ -3,16 +3,26 @@ module Components.TransactionsTable exposing (..)
 import Model exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Components.RenderDate exposing (renderDate)
-import Components.Transaction exposing (Transaction, TransactionsForOneDay)
 import Dict exposing (..)
+import Components.Helpers exposing (renderDate, renderAmount, formatAsMoney, applyColor)
+import Components.Transaction exposing (Transaction, TransactionsForOneDay)
+
+
+categoryName : Maybe String -> String
+categoryName category =
+    case category of
+        Just category ->
+            category
+
+        Nothing ->
+            ""
 
 
 renderTransactionRow : Model -> Transaction -> Html msg
 renderTransactionRow model transaction =
     div [ class "transactions-table__day__row" ]
-        [ div [ class "transactions-table__day__row__amt" ] [ text (toString transaction.amount) ]
-        , div [ class "transactions-table__day__row__cat" ] [ text (toString (Dict.get transaction.category model.categories)) ]
+        [ div [ class ("transactions-table__day__row__amt" ++ applyColor transaction.amount) ] [ renderAmount transaction.amount ]
+        , div [ class "transactions-table__day__row__cat" ] [ text (categoryName (Dict.get transaction.category model.categories)) ]
         , div [ class "transactions-table__day__row__desc" ] [ text transaction.description ]
         ]
 

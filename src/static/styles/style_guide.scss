@@ -7,6 +7,10 @@ $base-text-color: #333;
 $base-font-family: 'Open Sans';
 $base-line-height: 1.5;
 
+$positive-color: green;
+$negative-color: $base-text-color;
+
+
 $bold: 600;
 
 $font--table-field: 12px $base-font-family;
@@ -22,4 +26,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
+.-positive {
+  color: $positive-color;
+}
 
+.-negative {
+  color: $negative-color;;
+}

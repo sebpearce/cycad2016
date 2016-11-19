@@ -27,15 +27,15 @@ initialModel =
         [ { date = Date.fromString "2016/10/23" |> Result.withDefault (Date.fromTime 0)
           , transactions =
                 [ { id = 1, amount = -17.54, description = "stuff", category = 3 }
-                , { id = 2, amount = -15.0, description = "things", category = 1 }
-                , { id = 3, amount = 636.0, description = "", category = 5 }
+                , { id = 2, amount = -15, description = "things", category = 1 }
+                , { id = 3, amount = 636, description = "", category = 5 }
                 ]
           }
         , { date = Date.fromString "2016/10/24" |> Result.withDefault (Date.fromTime 0)
           , transactions =
                 [ { id = 4, amount = -10111.23, description = "stuff", category = 3 }
-                , { id = 5, amount = -71.0, description = "things", category = 2 }
-                , { id = 6, amount = 4000.0, description = "", category = 4 }
+                , { id = 5, amount = -71, description = "things", category = 2 }
+                , { id = 6, amount = 4000, description = "", category = 4 }
                 , { id = 7, amount = -75.9, description = "", category = 2 }
                 ]
           }
