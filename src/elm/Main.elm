@@ -39,6 +39,22 @@ initialModel =
                 , { id = 7, amount = -75.9, description = "", category = 2 }
                 ]
           }
+        , { date = Date.fromString "2016/10/25" |> Result.withDefault (Date.fromTime 0)
+          , transactions =
+                [ { id = 8, amount = -1650, description = "rent", category = 1 }
+                , { id = 9, amount = -19.99, description = "", category = 3 }
+                , { id = 10, amount = 5, description = "", category = 3 }
+                ]
+          }
+        , { date = Date.fromString "2016/10/26" |> Result.withDefault (Date.fromTime 0)
+          , transactions =
+                [ { id = 11, amount = -250, description = "rent", category = 1 }
+                , { id = 12, amount = -8.8, description = "dumplings", category = 3 }
+                , { id = 13, amount = -7.5, description = "", category = 3 }
+                , { id = 14, amount = -24.15, description = "", category = 2 }
+                , { id = 15, amount = -131, description = "", category = 2 }
+                ]
+          }
         ]
     , categories =
         Dict.fromList

@@ -11,16 +11,16 @@ formatAsMoney amt =
         cents =
             round (amt * 100)
 
-        leftside =
+        dollars =
             cents // 100
 
-        leftsideStr =
-            toString leftside
+        leftside =
+            separateThousands <| toString dollars
 
-        rightsideStr =
-            renderCents <| cents - (leftside * 100)
+        rightside =
+            renderCents <| cents - (dollars * 100)
     in
-        separateThousands leftsideStr ++ "." ++ rightsideStr
+        leftside ++ "." ++ rightside
 
 
 renderCents : Int -> String
@@ -63,8 +63,11 @@ renderDate date =
 
         d =
             padWithZero (day date)
+
+        weekday =
+            toString <| Date.dayOfWeek (date)
     in
-        y ++ "-" ++ m ++ "-" ++ d
+        weekday ++ ", " ++ d ++ " " ++ m ++ " " ++ y
 
 
 padWithZero : Int -> String

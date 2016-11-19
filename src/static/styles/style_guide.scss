@@ -3,17 +3,26 @@
 // $palette-black: #222;
 // $palette-blue: blah blah
 
-$base-text-color: #333;
+$base-text-color: #444;
 $base-font-family: 'Open Sans';
 $base-line-height: 1.5;
 
-$positive-color: green;
+$positive-color: hsl(100,60%,40%);
 $negative-color: $base-text-color;
 
+$color--date: #555;
+$color--category: #aaa;
+$color--divider: #ccc;
 
-$bold: 600;
+$weight--bold: 600;
+$weight--light: 300;
 
-$font--table-field: 12px $base-font-family;
+
+$font-size--small: 12px;
+$font-size--medium: 16px;
+$font-size--large: 16px;
+
+$font--table-field: $font-size--medium $base-font-family;
 
 body {
   margin: 0;

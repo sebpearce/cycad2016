@@ -21,8 +21,8 @@ categoryName category =
 renderTransactionRow : Model -> Transaction -> Html msg
 renderTransactionRow model transaction =
     div [ class "transactions-table__day__row" ]
-        [ div [ class ("transactions-table__day__row__amt" ++ applyColor transaction.amount) ] [ renderAmount transaction.amount ]
-        , div [ class "transactions-table__day__row__cat" ] [ text (categoryName (Dict.get transaction.category model.categories)) ]
+        [ div [ class "transactions-table__day__row__cat" ] [ text (categoryName (Dict.get transaction.category model.categories)) ]
+        , div [ class ("transactions-table__day__row__amt" ++ applyColor transaction.amount) ] [ renderAmount transaction.amount ]
         , div [ class "transactions-table__day__row__desc" ] [ text transaction.description ]
         ]
 
@@ -47,6 +47,4 @@ renderTransactionsTable model =
             List.map (renderTransactionsForOneDay model) model.transactions
     in
         div [ class "transactions-table__container" ]
-            [ h1 [ class "transactions-table__header" ] [ text "Transactions" ]
-            , div [ class "transactions-table" ] renderedDays
-            ]
+            [ div [ class "transactions-table" ] renderedDays ]

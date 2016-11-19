@@ -1,47 +1,53 @@
+$transactions-table-spacing: 1em;
+
 .transactions-table {
-  border: 1px solid #aaa;
+  font-size: $font-size--small;
+  max-width: 300px;
 }
 
 .transactions-table__day {
-  padding-bottom: 1em;
+  border-bottom: 1px solid $color--divider;
+  padding: $transactions-table-spacing;
 
   &:last-child {
-    padding-bottom: 0;
+    border-bottom: none;
   }
 }
 
 .transactions-table__day__date {
-  font-weight: $bold;
-  background: #eee;
-  padding: 0 0.5em;
+  font-weight: $weight--bold;
+  padding-bottom: 0.1em;
+  color: $color--date;
 }
 
 .transactions-table__day__row {
-
+  display: flex;
 }
 
 %transactions-table__day__row__field {
-  display: inline-block;
-  min-width: 70px;
-  padding-right: 1em;
+  display: block;
   font: $font--table-field;
-
-  &:last-child {
-    padding-right: 0;
-  }
 }
 
 .transactions-table__day__row__amt {
   @extend %transactions-table__day__row__field;
   text-align: right;
+  font-weight: $weight--bold;
+  flex: 2;
 }
 
 .transactions-table__day__row__cat {
   @extend %transactions-table__day__row__field;
-  min-width: 200px;
+  flex: 3;
+  color: $color--category;
+  font-weight: $weight--light;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .transactions-table__day__row__desc {
   @extend %transactions-table__day__row__field;
-  min-width: 200px;
+  display: none;
 }
