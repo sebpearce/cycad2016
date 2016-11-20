@@ -1,4 +1,4 @@
-module Components.Helpers exposing (..)
+module Modules.Helpers exposing (..)
 
 import Html exposing (..)
 import Date exposing (..)

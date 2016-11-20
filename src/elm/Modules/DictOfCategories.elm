@@ -1,4 +1,4 @@
-module Components.DictOfCategories exposing (DictOfCategories)
+module Modules.DictOfCategories exposing (DictOfCategories)
 
 import Date exposing (..)
 import Dict exposing (..)

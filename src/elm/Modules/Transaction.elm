@@ -1,4 +1,4 @@
-module Components.Transaction exposing (..)
+module Modules.Transaction exposing (..)
 
 import Date exposing (..)
 

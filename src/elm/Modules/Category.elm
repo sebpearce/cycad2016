@@ -1,4 +1,4 @@
-module Components.Category exposing (..)
+module Modules.Category exposing (..)
 
 
 type alias Category =

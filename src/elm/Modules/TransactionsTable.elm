@@ -1,11 +1,11 @@
-module Components.TransactionsTable exposing (..)
+module Modules.TransactionsTable exposing (..)
 
 import Model exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Dict exposing (..)
-import Components.Helpers exposing (renderDate, renderAmount, formatAsMoney, applyColor)
-import Components.Transaction exposing (Transaction, TransactionsForOneDay)
+import Modules.Helpers exposing (renderDate, renderAmount, formatAsMoney, applyColor)
+import Modules.Transaction exposing (Transaction, TransactionsForOneDay)
 
 
 categoryName : Maybe String -> String
