@@ -26,7 +26,7 @@ formatAsMoney amt =
 renderCents : Int -> String
 renderCents x =
     if x < 10 then
-        toString x ++ "0"
+        "0" ++ toString x
     else
         toString x
 

@@ -4,7 +4,7 @@ import Modules.DictOfCategories exposing (DictOfCategories)
 import Modules.Transaction exposing (Transaction, TransactionsForOneDay)
 import Date exposing (..)
 import Dict exposing (..)
-import Msg exposing (Msg)
+import Msg exposing (..)
 
 
 type alias Model =
@@ -43,7 +43,7 @@ init =
                     [ { id = 11, amount = -250, description = "rent", category = 1 }
                     , { id = 12, amount = -8.8, description = "dumplings", category = 3 }
                     , { id = 13, amount = -7.5, description = "", category = 3 }
-                    , { id = 14, amount = -24.15, description = "", category = 2 }
+                    , { id = 14, amount = -24.05, description = "", category = 2 }
                     , { id = 15, amount = -131, description = "", category = 2 }
                     ]
               }
