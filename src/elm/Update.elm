@@ -15,21 +15,26 @@ update msg model =
 
         DeleteTransaction id ->
             let
-                curAllTransactions =
+                currentMap =
                     model.allTransactions
-
-                curEntries =
-                    model.allTransactions.entries
             in
-                ( { model | allTransactions = { curAllTransactions | entries = deleteRowFromTransactions id curEntries } }, Cmd.none )
+                ( { model | allTransactions = deleteRowFromTransactions id currentMap }, Cmd.none )
 
-        AddTransaction id date amt desc cat ->
-            ( model, Cmd.none )
+        AddTransaction ( date, trans ) ->
+            let
+                currentMap =
+                    model.allTransactions
+            in
+                ( { model | allTransactions = addTransaction ( date, trans ) currentMap }, Cmd.none )
 
 
-deleteRowFromTransactions : Int -> List TransactionsForOneDay -> List TransactionsForOneDay
-deleteRowFromTransactions id transactions =
-    List.map (deleteRowFromDay id) transactions
+deleteRowFromTransactions : Int -> Map Date Transactions -> Map Date Transactions
+deleteRowFromTransactions id map =
+    let
+        newEntries =
+            List.map (deleteRowFromDay id) map.entries
+    in
+        { map | entries = newEntries }
 
 
 deleteRowFromDay : Int -> TransactionsForOneDay -> TransactionsForOneDay
@@ -39,37 +44,6 @@ deleteRowFromDay id ( date, transactions ) =
             List.filter (\el -> el.id /= id) transactions
     in
         ( date, newTransactions )
-
-
-
--- addTransaction : Date -> Transaction -> List TransactionsForOneDay -> List TransactionsForOneDay
--- addTransaction date newTransaction allTransactions =
---     let
---         target =
---             List.filter (\d -> d.date == date) allTransactions
---
---         newTransactions =
---             target.transactions ++ newTransaction
---
---         newDay =
---             { target | transactions = newTransactions }
---     in
---         allTransactions
---
---
--- insertEntry : ( key, val ) -> Map key val -> Map key val
---
---
--- insert newItem map =
---     let
---         compare =
---             map.compare
---
---         otherEntries =
---             map.entries
---     in
---         { map | entries = List.sortWith compare (newItem :: otherEntries) }
--- { allTransactions | target.transactions = target.transactions ++ newTransaction}
 
 
 compareEntries : ( Date, List Transaction ) -> ( Date, List Transaction ) -> Order
@@ -82,8 +56,8 @@ getFirstPart ( listA, listB ) =
     listA
 
 
-insert : ( Date, Transaction ) -> Map Date Transactions -> Map Date Transactions
-insert ( date, newTransaction ) map =
+addTransaction : ( Date, Transaction ) -> Map Date Transactions -> Map Date Transactions
+addTransaction ( date, newTransaction ) map =
     let
         dateAndTransaction =
             ( date, newTransaction )
@@ -100,8 +74,11 @@ insert ( date, newTransaction ) map =
         if List.member date existingDates then
             { map | entries = addRowToDate dateAndTransaction otherEntries }
         else
-            -- { map | entries = List.sortWith compare (dateAndTransaction :: otherEntries) }
-            map
+            { map | entries = List.sortWith compare (( date, [ newTransaction ] ) :: otherEntries) }
+
+
+
+-- map
 
 
 addRowToDate : ( Date, Transaction ) -> List ( Date, List Transaction ) -> List ( Date, List Transaction )

@@ -18,5 +18,8 @@ view model =
             , button
                 [ onClick (DeleteTransaction 4) ]
                 [ text "Delete!" ]
+            , button
+                [ onClick (AddTransaction ( generateDate "2016/10/27", { id = 99, amount = 999, description = "", category = 2 } )) ]
+                [ text "Add!" ]
             ]
         ]

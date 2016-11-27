@@ -1,9 +1,10 @@
 module Msg exposing (..)
 
 import Date exposing (..)
+import Modules.Transaction exposing (..)
 
 
 type Msg
     = NoOp
     | DeleteTransaction Int
-    | AddTransaction Int Date Float Int String
+    | AddTransaction ( Date, Transaction )
