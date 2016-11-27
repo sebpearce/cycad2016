@@ -16,8 +16,7 @@ view model =
         , div [ class "content__container" ]
             [ renderTransactionsTable model
             , button
-                [-- onClick (DeleteTransaction 4)
-                ]
+                [ onClick (DeleteTransaction 4) ]
                 [ text "Delete!" ]
             ]
         ]

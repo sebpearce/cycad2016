@@ -14,22 +14,34 @@ update msg model =
             ( model, Cmd.none )
 
         DeleteTransaction id ->
-            -- ( { model | transactions = deleteRowFromTransactions id model.transactions }, Cmd.none )
-            ( model, Cmd.none )
+            let
+                curAllTransactions =
+                    model.allTransactions
+
+                curEntries =
+                    model.allTransactions.entries
+            in
+                ( { model | allTransactions = { curAllTransactions | entries = deleteRowFromTransactions id curEntries } }, Cmd.none )
 
         AddTransaction id date amt desc cat ->
             ( model, Cmd.none )
 
 
+deleteRowFromTransactions : Int -> List TransactionsForOneDay -> List TransactionsForOneDay
+deleteRowFromTransactions id transactions =
+    List.map (deleteRowFromDay id) transactions
 
--- deleteRowFromTransactions : Int -> List TransactionsForOneDay -> List TransactionsForOneDay
--- deleteRowFromTransactions id transactions =
---     List.map (deleteRowFromDay id) transactions
---
---
--- deleteRowFromDay : Int -> TransactionsForOneDay -> TransactionsForOneDay
--- deleteRowFromDay id day =
---     { day | transactions = List.filter (\el -> el.id /= id) day.transactions }
+
+deleteRowFromDay : Int -> TransactionsForOneDay -> TransactionsForOneDay
+deleteRowFromDay id ( date, transactions ) =
+    let
+        newTransactions =
+            List.filter (\el -> el.id /= id) transactions
+    in
+        ( date, newTransactions )
+
+
+
 -- addTransaction : Date -> Transaction -> List TransactionsForOneDay -> List TransactionsForOneDay
 -- addTransaction date newTransaction allTransactions =
 --     let
