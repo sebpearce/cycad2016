@@ -1,6 +1,6 @@
 module Modules.Transaction exposing (..)
 
-import Date exposing (..)
+import Modules.DateAsInt exposing (..)
 
 
 type alias Transaction =
@@ -16,4 +16,4 @@ type alias Transactions =
 
 
 type alias TransactionsForOneDay =
-    ( Date, Transactions )
+    ( DateAsInt, Transactions )

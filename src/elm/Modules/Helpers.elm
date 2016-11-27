@@ -3,6 +3,7 @@ module Modules.Helpers exposing (..)
 import Html exposing (..)
 import Date exposing (..)
 import String exposing (..)
+import Modules.DateAsInt exposing (..)
 
 
 formatAsMoney : Float -> String
@@ -52,20 +53,35 @@ renderAmount amount =
         text ("–" ++ formatAsMoney (abs amount))
 
 
-renderDate : Date -> String
+interpretAsDate : Int -> Date
+interpretAsDate x =
+    let
+        dateString =
+            toString x
+
+        formattedString =
+            String.slice 0 4 dateString ++ "-" ++ String.slice 4 6 dateString ++ "-" ++ String.slice 6 8 dateString
+    in
+        Date.fromString formattedString |> Result.withDefault (Date.fromTime 0)
+
+
+renderDate : DateAsInt -> String
 renderDate date =
     let
+        dateAsDate =
+            interpretAsDate date
+
         y =
-            toString (year date)
+            toString (year dateAsDate)
 
         m =
-            toString (month date)
+            toString (month dateAsDate)
 
         d =
-            padWithZero (day date)
+            padWithZero (day dateAsDate)
 
         weekday =
-            toString <| Date.dayOfWeek (date)
+            toString <| Date.dayOfWeek (dateAsDate)
     in
         weekday ++ ", " ++ d ++ " " ++ m ++ " " ++ y
 

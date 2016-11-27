@@ -1,13 +1,13 @@
 module Msg exposing (..)
 
-import Date exposing (..)
 import Modules.Transaction exposing (..)
+import Modules.DateAsInt exposing (..)
 
 
 type Msg
     = NoOp
     | DeleteTransaction Int
-    | AddTransaction ( Date, Transaction )
+    | AddTransaction ( DateAsInt, Transaction )
     | UpdateCapturedDate String
     | UpdateCapturedAmt String
     | UpdateCapturedDesc String
