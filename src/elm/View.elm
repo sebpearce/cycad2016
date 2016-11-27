@@ -5,6 +5,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Msg exposing (..)
+import Update exposing (..)
 import Modules.TransactionsTable exposing (renderTransactionsTable)
 import Modules.Sidebar exposing (renderSidebar)
 
@@ -19,7 +20,11 @@ view model =
                 [ onClick (DeleteTransaction 4) ]
                 [ text "Delete!" ]
             , button
-                [ onClick (AddTransaction ( generateDate "2016/10/27", { id = 99, amount = 999, description = "", category = 2 } )) ]
+                [ onClick (AddTransaction ( model.capturedDate, { id = 99, amount = model.capturedAmt, description = model.capturedDesc, category = model.capturedCat } )) ]
                 [ text "Add!" ]
+            , input [ onInput UpdateCapturedDate ] []
+            , input [ onInput UpdateCapturedAmt ] []
+            , input [ onInput UpdateCapturedDesc ] []
+            , input [ onInput UpdateCapturedCat ] []
             ]
         ]

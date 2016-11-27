@@ -13,6 +13,18 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
+        UpdateCapturedDate strDate ->
+            ( { model | capturedDate = generateDate strDate }, Cmd.none )
+
+        UpdateCapturedAmt strAmt ->
+            ( { model | capturedAmt = String.toFloat strAmt |> Result.withDefault 0 }, Cmd.none )
+
+        UpdateCapturedDesc strDesc ->
+            ( { model | capturedDesc = strDesc }, Cmd.none )
+
+        UpdateCapturedCat strCat ->
+            ( { model | capturedCat = String.toInt strCat |> Result.withDefault 0 }, Cmd.none )
+
         DeleteTransaction id ->
             let
                 currentMap =
@@ -75,10 +87,6 @@ addTransaction ( date, newTransaction ) map =
             { map | entries = addRowToDate dateAndTransaction otherEntries }
         else
             { map | entries = List.sortWith compare (( date, [ newTransaction ] ) :: otherEntries) }
-
-
-
--- map
 
 
 addRowToDate : ( Date, Transaction ) -> List ( Date, List Transaction ) -> List ( Date, List Transaction )
