@@ -6,11 +6,16 @@ $transactions-table-spacing: 1em;
 }
 
 .transactions-table__day {
-  border-bottom: 1px solid $color--divider;
   padding: $transactions-table-spacing;
+  position: relative;
 
-  &:last-child {
-    border-bottom: none;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 1px;
+    width: 352px;
+    border-bottom: 1px solid $color--divider;
   }
 }
 
@@ -22,6 +27,11 @@ $transactions-table-spacing: 1em;
 
 .transactions-table__day__row {
   display: flex;
+  position: relative;
+  padding-right: 15px;
+  &:hover > .transactions-table__day__row__delete-link {
+    display: block;
+  }
 }
 
 %transactions-table__day__row__field {
@@ -50,4 +60,12 @@ $transactions-table-spacing: 1em;
 .transactions-table__day__row__desc {
   @extend %transactions-table__day__row__field;
   display: none;
+}
+
+.transactions-table__day__row__delete-link {
+  display: none;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  color: hsl(0, 40%, 50%);
 }
