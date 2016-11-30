@@ -26,6 +26,8 @@ type alias Model =
     , capturedAmt : Float
     , capturedDesc : String
     , capturedCat : Int
+    , currentSeed : Int
+    , currentUuid : Maybe String
     }
 
 
@@ -87,6 +89,8 @@ init =
       , capturedAmt = 999
       , capturedDesc = "desc"
       , capturedCat = 2
+      , currentSeed = 0
+      , currentUuid = Just ""
       }
     , Cmd.none
     )

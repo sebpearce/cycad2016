@@ -7,6 +7,7 @@ import Modules.Transaction exposing (..)
 import Date exposing (..)
 import Modules.DateAsInt exposing (..)
 import Modules.CompareEntries exposing (..)
+import Random exposing (..)
 
 
 readAsInt : String -> Int
@@ -24,6 +25,12 @@ update msg model =
     case msg of
         NoOp ->
             ( model, Cmd.none )
+
+        GenerateRandomNumber ->
+            ( model, Random.generate SetSeed (Random.int 1 9007199254740992) )
+
+        SetSeed newRand ->
+            ( { model | currentSeed = newRand }, Cmd.none )
 
         UpdateCapturedDate strDate ->
             ( { model | capturedDate = readAsInt strDate }, Cmd.none )

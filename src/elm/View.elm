@@ -26,5 +26,8 @@ view model =
             , input [ onInput UpdateCapturedAmt ] []
             , input [ onInput UpdateCapturedDesc ] []
             , input [ onInput UpdateCapturedCat ] []
+            , button
+                [ onClick (GenerateRandomNumber) ]
+                [ text "Generate!" ]
             ]
         ]

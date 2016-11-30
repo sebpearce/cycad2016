@@ -6,6 +6,7 @@ import Model exposing (..)
 import Update exposing (..)
 import View exposing (..)
 import Subscriptions exposing (..)
+import Uuid.Barebones exposing (uuidStringGenerator, isValidUuid)
 
 
 -- MODEL

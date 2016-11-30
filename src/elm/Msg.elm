@@ -12,3 +12,5 @@ type Msg
     | UpdateCapturedAmt String
     | UpdateCapturedDesc String
     | UpdateCapturedCat String
+    | GenerateRandomNumber
+    | SetSeed Int
