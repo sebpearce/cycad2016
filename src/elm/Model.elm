@@ -7,6 +7,7 @@ import Modules.DateAsInt exposing (..)
 import Dict exposing (..)
 import Msg exposing (..)
 import Random.Pcg exposing (Seed, initialSeed)
+import Task
 
 
 type alias Model =
@@ -71,5 +72,5 @@ init seed =
       , currentSeed = initialSeed seed
       , currentUuid = ""
       }
-    , Cmd.none
+    , Task.perform identity (Task.succeed NewUuid)
     )

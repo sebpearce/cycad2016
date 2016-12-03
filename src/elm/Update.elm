@@ -58,13 +58,13 @@ update msg model =
             in
                 { model | allTransactions = deleteRowFromTransactions id currentMap } ! []
 
-        AddTransaction ( date, trans ) ->
+        AddTransaction ( date, amt, cat, desc ) ->
             let
                 currentMap =
                     model.allTransactions
 
                 newModel =
-                    { model | allTransactions = addTransaction ( date, trans ) currentMap }
+                    { model | allTransactions = addTransaction ( date, { id = model.currentUuid, amount = amt, category = cat, description = desc } ) currentMap }
             in
                 update NewUuid newModel
 

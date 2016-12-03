@@ -19,7 +19,7 @@ view model =
                 [ onClick (DeleteTransaction "4") ]
                 [ text "Delete!" ]
             , button
-                [ onClick (AddTransaction ( model.capturedDate, { id = model.currentUuid, amount = model.capturedAmt, description = model.capturedDesc, category = model.capturedCat } )) ]
+                [ onClick (AddTransaction ( model.capturedDate, model.capturedAmt, model.capturedCat, model.capturedDesc )) ]
                 [ text "Add!" ]
             , input [ onInput UpdateCapturedDate ] []
             , input [ onInput UpdateCapturedAmt ] []

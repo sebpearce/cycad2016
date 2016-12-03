@@ -7,7 +7,7 @@ import Modules.DateAsInt exposing (..)
 type Msg
     = NoOp
     | DeleteTransaction String
-    | AddTransaction ( DateAsInt, Transaction )
+    | AddTransaction ( DateAsInt, Float, Int, String )
     | UpdateCapturedDate String
     | UpdateCapturedAmt String
     | UpdateCapturedDesc String
