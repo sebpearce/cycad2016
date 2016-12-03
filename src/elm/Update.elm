@@ -4,10 +4,12 @@ import Modules.Map exposing (..)
 import Model exposing (..)
 import Msg exposing (..)
 import Modules.Transaction exposing (..)
-import Date exposing (..)
 import Modules.DateAsInt exposing (..)
-import Modules.CompareEntries exposing (..)
-import Random exposing (..)
+import Random.Pcg exposing (Seed, initialSeed, step)
+import Uuid.Barebones exposing (uuidStringGenerator, isValidUuid)
+
+
+-- every call to generate a new Uuid will give you a tuple of a Uuid and a new seed. It is very important that whenever you generate a new Uuid you store this seed you get back into your model and use this one for the next Uuid generation. If you reuse a seed, you will create the same Uuid twice!
 
 
 readAsInt : String -> Int
@@ -24,42 +26,50 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NoOp ->
-            ( model, Cmd.none )
+            model ! []
 
-        GenerateRandomNumber ->
-            ( model, Random.generate SetSeed (Random.int 1 9007199254740992) )
-
-        SetSeed newRand ->
-            ( { model | currentSeed = newRand }, Cmd.none )
+        NewUuid ->
+            let
+                ( newUuid, newSeed ) =
+                    step Uuid.Barebones.uuidStringGenerator model.currentSeed
+            in
+                { model
+                    | currentUuid = newUuid
+                    , currentSeed = newSeed
+                }
+                    ! []
 
         UpdateCapturedDate strDate ->
-            ( { model | capturedDate = readAsInt strDate }, Cmd.none )
+            { model | capturedDate = readAsInt strDate } ! []
 
         UpdateCapturedAmt strAmt ->
-            ( { model | capturedAmt = String.toFloat strAmt |> Result.withDefault 0 }, Cmd.none )
+            { model | capturedAmt = String.toFloat strAmt |> Result.withDefault 0 } ! []
 
         UpdateCapturedDesc strDesc ->
-            ( { model | capturedDesc = strDesc }, Cmd.none )
+            { model | capturedDesc = strDesc } ! []
 
         UpdateCapturedCat strCat ->
-            ( { model | capturedCat = String.toInt strCat |> Result.withDefault 0 }, Cmd.none )
+            { model | capturedCat = String.toInt strCat |> Result.withDefault 0 } ! []
 
         DeleteTransaction id ->
             let
                 currentMap =
                     model.allTransactions
             in
-                ( { model | allTransactions = deleteRowFromTransactions id currentMap }, Cmd.none )
+                { model | allTransactions = deleteRowFromTransactions id currentMap } ! []
 
         AddTransaction ( date, trans ) ->
             let
                 currentMap =
                     model.allTransactions
+
+                newModel =
+                    { model | allTransactions = addTransaction ( date, trans ) currentMap }
             in
-                ( { model | allTransactions = addTransaction ( date, trans ) currentMap }, Cmd.none )
+                update NewUuid newModel
 
 
-deleteRowFromTransactions : Int -> Map DateAsInt Transactions -> Map DateAsInt Transactions
+deleteRowFromTransactions : String -> Map DateAsInt Transactions -> Map DateAsInt Transactions
 deleteRowFromTransactions id map =
     let
         newEntries =
@@ -68,7 +78,7 @@ deleteRowFromTransactions id map =
         { map | entries = newEntries }
 
 
-deleteRowFromDay : Int -> TransactionsForOneDay -> TransactionsForOneDay
+deleteRowFromDay : String -> TransactionsForOneDay -> TransactionsForOneDay
 deleteRowFromDay id ( date, transactions ) =
     let
         newTransactions =

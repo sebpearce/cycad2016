@@ -6,15 +6,14 @@ import Model exposing (..)
 import Update exposing (..)
 import View exposing (..)
 import Subscriptions exposing (..)
-import Uuid.Barebones exposing (uuidStringGenerator, isValidUuid)
 
 
 -- MODEL
 
 
-main : Program Never Model Msg.Msg
+main : Program Int Model Msg.Msg
 main =
-    program
+    programWithFlags
         { init = Model.init
         , view = View.view
         , update = Update.update

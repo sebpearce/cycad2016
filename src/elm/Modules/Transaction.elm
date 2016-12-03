@@ -4,7 +4,7 @@ import Modules.DateAsInt exposing (..)
 
 
 type alias Transaction =
-    { id : Int
+    { id : String
     , amount : Float
     , description : String
     , category : Int

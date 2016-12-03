@@ -6,11 +6,10 @@ import Modules.DateAsInt exposing (..)
 
 type Msg
     = NoOp
-    | DeleteTransaction Int
+    | DeleteTransaction String
     | AddTransaction ( DateAsInt, Transaction )
     | UpdateCapturedDate String
     | UpdateCapturedAmt String
     | UpdateCapturedDesc String
     | UpdateCapturedCat String
-    | GenerateRandomNumber
-    | SetSeed Int
+    | NewUuid
