@@ -6,7 +6,7 @@ import Modules.DateAsInt exposing (..)
 
 type Msg
     = NoOp
-    | TestStorage
+    | Save
     | DeleteTransaction String
     | AddTransaction ( DateAsInt, Float, Int, String )
     | UpdateCapturedDate String

@@ -3,13 +3,20 @@ port module Update exposing (update)
 import Modules.Map exposing (..)
 import Model exposing (..)
 import Msg exposing (..)
+import Dict
 import Modules.Transaction exposing (..)
 import Modules.DateAsInt exposing (..)
 import Random.Pcg exposing (Seed, initialSeed, step)
 import Uuid.Barebones exposing (uuidStringGenerator, isValidUuid)
 
 
-port setStorage : String -> Cmd msg
+type alias SaveFormat =
+    { entries : List TransactionsForOneDay
+    , categories : List ( Int, String )
+    }
+
+
+port setStorage : SaveFormat -> Cmd msg
 
 
 readAsInt : String -> Int
@@ -28,8 +35,14 @@ update msg model =
         NoOp ->
             model ! []
 
-        TestStorage ->
-            ( model, setStorage "All systems are running smoothly." )
+        Save ->
+            let
+                appState =
+                    { entries = model.allTransactions.entries
+                    , categories = Dict.toList model.categories
+                    }
+            in
+                ( model, setStorage appState )
 
         NewUuid ->
             let

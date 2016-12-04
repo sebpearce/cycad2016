@@ -54,18 +54,18 @@ var categories = [
   [1, "Rent"], [2, "Groceries"], [3, "Eating out"], [4, "Salary"], [5, "Partner's salary"], [6, "Gifts"]
 ];
 
-var storedState = localStorage.getItem('model');
+var storedState = localStorage.getItem('appState');
 var startingState = storedState ? JSON.parse(storedState) : null;
-
-// var elmApp = Elm.Main.embed(mountNode, startingState);
-var elmApp = Elm.Main.embed(mountNode, {
-  seed: randomSeed,
-  entries: entries,
-  categories: categories
-});
+startingState['seed'] = randomSeed;
+var elmApp = Elm.Main.embed(mountNode, startingState);
+// var elmApp = Elm.Main.embed(mountNode, {
+//   seed: randomSeed,
+//   entries: entries,
+//   categories: categories
+// });
 
 elmApp.ports.setStorage.subscribe(function (state) {
-  localStorage.setItem('model', JSON.stringify(state))
+  localStorage.setItem('appState', JSON.stringify(state))
 })
 
 
