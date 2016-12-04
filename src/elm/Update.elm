@@ -1,4 +1,4 @@
-module Update exposing (update)
+port module Update exposing (update)
 
 import Modules.Map exposing (..)
 import Model exposing (..)
@@ -9,7 +9,7 @@ import Random.Pcg exposing (Seed, initialSeed, step)
 import Uuid.Barebones exposing (uuidStringGenerator, isValidUuid)
 
 
--- every call to generate a new Uuid will give you a tuple of a Uuid and a new seed. It is very important that whenever you generate a new Uuid you store this seed you get back into your model and use this one for the next Uuid generation. If you reuse a seed, you will create the same Uuid twice!
+port setStorage : String -> Cmd msg
 
 
 readAsInt : String -> Int
@@ -27,6 +27,9 @@ update msg model =
     case msg of
         NoOp ->
             model ! []
+
+        TestStorage ->
+            ( model, setStorage "All systems are running smoothly." )
 
         NewUuid ->
             let

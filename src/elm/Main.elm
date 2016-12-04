@@ -12,7 +12,7 @@ import Init exposing (..)
 -- MODEL
 
 
-main : Program Int Model Msg.Msg
+main : Program Flags Model Msg
 main =
     programWithFlags
         { init = Init.init

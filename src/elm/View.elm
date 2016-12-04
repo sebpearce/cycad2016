@@ -28,5 +28,8 @@ view model =
             , button
                 [ onClick NewUuid ]
                 [ text "Generate!" ]
+            , button
+                [ onClick TestStorage ]
+                [ text "Test storage" ]
             ]
         ]
