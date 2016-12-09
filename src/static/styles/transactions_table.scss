@@ -17,6 +17,10 @@ $transactions-table-spacing: 1em;
     width: 352px;
     border-bottom: 1px solid $color--divider;
   }
+
+  &:first-child::before {
+    border: 0;
+  }
 }
 
 .transactions-table__day__date {
