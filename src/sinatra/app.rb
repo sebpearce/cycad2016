@@ -38,6 +38,29 @@ get '/transactions/:date/?' do
   query.empty? ? "Not found." : JSONFormatter.format_transactions(query.map(&:values))
 end
 
+def verify_post_request(payload)
+  keys = payload.keys - [:description]
+  keys.each do |key|
+    raise 'Oh no, nil key!' if key.nil?
+    raise 'Oh no, nil value!' if payload[key].nil?
+  end
+end
+
+post '/transactions/new' do
+  request.body.rewind
+  payload = JSON.parse(request.body.read)
+  data = Hash[payload.map{ |k,v| [k.to_sym, v] }]
+
+  begin
+    verify_post_request(data)
+  rescue RuntimeError => error
+    error.message
+  else
+    # TODO: Handle DB errors like NOT NULL constraint
+    Transaction.insert(id: data[:id], date: data[:date], amount: data[:amount], category_id: data[:category_id], description: data[:description])
+  end
+end
+
 get '/categories/?' do
   content_type :json
   query = Category.all
