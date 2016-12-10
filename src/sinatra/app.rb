@@ -4,7 +4,7 @@ require 'json'
 
 DB = Sequel.connect('sqlite://cycad.db')
 
-require_relative 'seed'
+# require_relative 'seed'
 require_relative 'models/transaction'
 require_relative 'models/category'
 require_relative 'helpers/json_formatter'
@@ -23,31 +23,31 @@ end
 get '/transactions/?' do
   content_type :json
   query = Transaction.all
-  query.empty? ? "Not found." : JSONFormatter.format_entries_as_json(query.map(&:values))
+  query.empty? ? "Not found." : JSONFormatter.format_transactions(query.map(&:values))
 end
 
-get '/transactions/:date1-:date2' do
+get '/transactions/:date1..:date2' do
   content_type :json
   query = Transaction.where(date: params[:date1]..params[:date2]).all
-  query.empty? ? "Not found." : JSONFormatter.format_entries_as_json(query.map(&:values))
+  query.empty? ? "Not found." : JSONFormatter.format_transactions(query.map(&:values))
 end
 
 get '/transactions/:date' do
   content_type :json
   query = Transaction.where(date: params[:date]).all
-  query.empty? ? "Not found." : JSONFormatter.format_entries_for_one_day(query.map(&:values))
+  query.empty? ? "Not found." : JSONFormatter.format_transactions(query.map(&:values))
 end
 
 get '/categories/?' do
   content_type :json
   query = Category.all
-  query.empty? ? "Not found." : JSONFormatter.format_categories_as_json(query.map(&:values))
+  query.empty? ? "Not found." : JSONFormatter.format_categories(query.map(&:values))
 end
 
 get '/categories/:id' do
   content_type :json
-  query = Category.filter(id: params[:id]).first
-  query.nil? ? "Not found." : query.values.to_json
+  query = Category.filter(id: params[:id]).all
+  query.nil? ? "Not found." : JSONFormatter.format_categories(query.map(&:values))
 end
 
 not_found do
