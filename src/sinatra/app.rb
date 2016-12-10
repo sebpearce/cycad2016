@@ -5,10 +5,21 @@ require 'bigdecimal'
 
 DB = Sequel.connect('sqlite://cycad.db')
 
-# require_relative 'seed'
+require_relative 'seed'
 require_relative 'models/transaction'
 require_relative 'models/category'
 require_relative 'helpers/json_formatter'
+
+options "*" do
+  response.headers["Access-Control-Allow-Methods"] = "GET,PUT,POST,DELETE,OPTIONS"
+  response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
+  response.headers["Access-Control-Allow-Origin"] = "*"
+  200
+end
+
+before do
+  headers 'Access-Control-Allow-Origin' => '*'
+end
 
 get '/?' do
   content_type :json
@@ -78,10 +89,6 @@ post '/transactions/new' do
     data[:date] = data[:date].to_i
     data[:category_id] = data[:category_id].to_i
     data[:amount] = BigDecimal(data[:amount])
-  rescue RuntimeError => error
-    error.message
-  else
-    # TODO: Handle DB errors like NOT NULL constraint
     Transaction.insert(
       id:          data[:id],
       date:        data[:date],
@@ -89,6 +96,10 @@ post '/transactions/new' do
       category_id: data[:category_id],
       description: data[:description],
     )
+  rescue StandardError => error
+    status 400
+    error.message
+  else
   end
 end
 
@@ -99,7 +110,12 @@ post '/categories/new' do
   begin
     verify_category_post(data)
     data[:id] = data[:id].to_i
-  rescue RuntimeError => error
+    Category.insert(
+      id:   data[:id],
+      name: data[:name],
+    )
+  rescue StandardError => error
+    status 400
     error.message
   else
     data.inspect

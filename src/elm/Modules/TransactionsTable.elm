@@ -23,9 +23,9 @@ categoryName category =
 renderTransactionRow : Model -> Transaction -> Html Msg
 renderTransactionRow model transaction =
     div [ class "transactions-table__day__row", attribute "data-id" (toString transaction.id) ]
-        [ div [ class "transactions-table__day__row__cat" ] [ text (categoryName (Dict.get transaction.category model.categories)) ]
+        [ div [ class "transactions-table__day__row__cat" ] [ text (categoryName (Dict.get transaction.category_id model.categories)) ]
         , div [ class ("transactions-table__day__row__amt" ++ applyColor transaction.amount) ] [ renderAmount transaction.amount ]
-        , div [ class "transactions-table__day__row__desc" ] [ text transaction.description ]
+        , div [ class "transactions-table__day__row__desc" ] [ text <| Maybe.withDefault "" transaction.description ]
         , a [ class "transactions-table__day__row__delete-link", onClick (DeleteTransaction transaction.id) ] [ text "x" ]
         ]
 

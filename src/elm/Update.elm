@@ -29,6 +29,11 @@ readAsInt input =
             val
 
 
+convertStringToMaybe : String -> Maybe String
+convertStringToMaybe str =
+    Just str
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -62,7 +67,7 @@ update msg model =
             { model | capturedAmt = String.toFloat strAmt |> Result.withDefault 0 } ! []
 
         UpdateCapturedDesc strDesc ->
-            { model | capturedDesc = strDesc } ! []
+            { model | capturedDesc = convertStringToMaybe strDesc } ! []
 
         UpdateCapturedCat strCat ->
             { model | capturedCat = String.toInt strCat |> Result.withDefault 0 } ! []
@@ -80,7 +85,7 @@ update msg model =
                     model.allTransactions
 
                 newModel =
-                    { model | allTransactions = addTransaction ( date, { id = model.currentUuid, amount = amt, category = cat, description = desc } ) currentMap }
+                    { model | allTransactions = addTransaction ( date, { id = model.currentUuid, amount = amt, category_id = cat, description = desc } ) currentMap }
             in
                 update NewUuid newModel
 

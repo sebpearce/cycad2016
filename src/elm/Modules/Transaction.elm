@@ -6,8 +6,8 @@ import Modules.DateAsInt exposing (..)
 type alias Transaction =
     { id : String
     , amount : Float
-    , description : String
-    , category : Int
+    , description : Maybe String
+    , category_id : Int
     }
 
 

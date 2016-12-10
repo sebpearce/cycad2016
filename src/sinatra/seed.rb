@@ -3,6 +3,8 @@
 # require 'sequel'
 # DB = Sequel.connect('sqlite://cycad.db')
 
+puts "Reseeding database..."
+
 DB.drop_table(:transactions, :categories)
 
 DB.create_table(:categories) do

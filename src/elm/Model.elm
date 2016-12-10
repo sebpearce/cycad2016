@@ -12,7 +12,7 @@ type alias Model =
     , categories : Dict Int String
     , capturedDate : DateAsInt
     , capturedAmt : Float
-    , capturedDesc : String
+    , capturedDesc : Maybe String
     , capturedCat : Int
     , currentSeed : Seed
     , currentUuid : String
