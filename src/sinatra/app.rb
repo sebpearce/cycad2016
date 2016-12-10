@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sequel'
 require 'json'
+require 'bigdecimal'
 
 DB = Sequel.connect('sqlite://cycad.db')
 
@@ -38,29 +39,6 @@ get '/transactions/:date/?' do
   query.empty? ? "Not found." : JSONFormatter.format_transactions(query.map(&:values))
 end
 
-def verify_post_request(payload)
-  keys = payload.keys - [:description]
-  keys.each do |key|
-    raise 'Oh no, nil key!' if key.nil?
-    raise 'Oh no, nil value!' if payload[key].nil?
-  end
-end
-
-post '/transactions/new' do
-  request.body.rewind
-  payload = JSON.parse(request.body.read)
-  data = Hash[payload.map{ |k,v| [k.to_sym, v] }]
-
-  begin
-    verify_post_request(data)
-  rescue RuntimeError => error
-    error.message
-  else
-    # TODO: Handle DB errors like NOT NULL constraint
-    Transaction.insert(id: data[:id], date: data[:date], amount: data[:amount], category_id: data[:category_id], description: data[:description])
-  end
-end
-
 get '/categories/?' do
   content_type :json
   query = Category.all
@@ -71,6 +49,61 @@ get '/categories/:id/?' do
   content_type :json
   query = Category.filter(id: params[:id]).all
   query.nil? ? "Not found." : JSONFormatter.format_categories(query.map(&:values))
+end
+
+def verify_transaction_post(payload)
+  keys = payload.keys - [:description]
+  keys.each do |key|
+    raise 'Oh no, nil value!' if payload[key].nil?
+  end
+end
+
+def verify_category_post(payload)
+  payload.keys.each do |key|
+    raise 'Oh no, nil value!' if payload[key].nil?
+  end
+end
+
+def symbolize_keys(hash)
+  Hash[hash.map{ |k,v| [k.to_sym, v] }]
+end
+
+post '/transactions/new' do
+  request.body.rewind
+  payload = JSON.parse(request.body.read)
+  data = symbolize_keys(payload)
+
+  begin
+    verify_transaction_post(data)
+    data[:date] = data[:date].to_i
+    data[:category_id] = data[:category_id].to_i
+    data[:amount] = BigDecimal(data[:amount])
+  rescue RuntimeError => error
+    error.message
+  else
+    # TODO: Handle DB errors like NOT NULL constraint
+    Transaction.insert(
+      id:          data[:id],
+      date:        data[:date],
+      amount:      data[:amount],
+      category_id: data[:category_id],
+      description: data[:description],
+    )
+  end
+end
+
+post '/categories/new' do
+  request.body.rewind
+  payload = JSON.parse(request.body.read)
+  data = symbolize_keys(payload)
+  begin
+    verify_category_post(data)
+    data[:id] = data[:id].to_i
+  rescue RuntimeError => error
+    error.message
+  else
+    data.inspect
+  end
 end
 
 not_found do
