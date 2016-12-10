@@ -26,13 +26,13 @@ get '/transactions/?' do
   query.empty? ? "Not found." : JSONFormatter.format_transactions(query.map(&:values))
 end
 
-get '/transactions/:date1..:date2' do
+get '/transactions/:date1..:date2/?' do
   content_type :json
   query = Transaction.where(date: params[:date1]..params[:date2]).all
   query.empty? ? "Not found." : JSONFormatter.format_transactions(query.map(&:values))
 end
 
-get '/transactions/:date' do
+get '/transactions/:date/?' do
   content_type :json
   query = Transaction.where(date: params[:date]).all
   query.empty? ? "Not found." : JSONFormatter.format_transactions(query.map(&:values))
@@ -44,7 +44,7 @@ get '/categories/?' do
   query.empty? ? "Not found." : JSONFormatter.format_categories(query.map(&:values))
 end
 
-get '/categories/:id' do
+get '/categories/:id/?' do
   content_type :json
   query = Category.filter(id: params[:id]).all
   query.nil? ? "Not found." : JSONFormatter.format_categories(query.map(&:values))
