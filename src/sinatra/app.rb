@@ -23,35 +23,30 @@ end
 
 before do
   headers 'Access-Control-Allow-Origin' => '*'
+  content_type :json
 end
 
 get '/?' do
-  content_type :json
   RootController.new.index
 end
 
 get '/transactions/?' do
-  content_type :json
   TransactionsController.new.index
 end
 
 get '/transactions/:date1..:date2/?' do
-  content_type :json
   TransactionsController.new.range_of_dates(params[:date1], params[:date2])
 end
 
 get '/transactions/:date/?' do
-  content_type :json
   TransactionsController.new.one_day(:date)
 end
 
 get '/categories/?' do
-  content_type :json
   CatgoriesController.new.index
 end
 
 get '/categories/:id/?' do
-  content_type :json
   CatgoriesController.new.show(params[:id])
 end
 
@@ -112,6 +107,5 @@ post '/categories/new' do
 end
 
 not_found do
-  content_type :json
   "404 not found"
 end
