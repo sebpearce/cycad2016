@@ -86,8 +86,15 @@ update msg model =
 
                 newModel =
                     { model | allTransactions = addTransaction ( date, { id = model.currentUuid, amount = amt, category_id = cat, description = desc } ) currentMap }
+
+                -- url = "http://localhost:4567/transactions/new"
+                -- request = Http.post url functionToConvertTransToJSON
             in
                 update NewUuid newModel
+
+
+
+-- Http.send MsgThatTakesResult request
 
 
 deleteRowFromTransactions : String -> Map DateAsInt Transactions -> Map DateAsInt Transactions

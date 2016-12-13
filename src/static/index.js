@@ -9,11 +9,11 @@ var SERVER_HOSTNAME = 'http://localhost:4567';
 
 function postJSON(url, data) {
   data = data || {
-    id: 'test-id',
-    date: '20161207',
-    amount: '1000',
-    desc: '',
-    category_id: '2',
+    id: 'test-id-again-2',
+    date: '20161217',
+    amount: '2222',
+    desc: 'lulz',
+    category_id: '1',
   };
   url = url || SERVER_HOSTNAME + '/transactions/new';
 
