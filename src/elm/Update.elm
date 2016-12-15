@@ -34,6 +34,16 @@ convertStringToMaybe str =
     Just str
 
 
+handleDescription : Maybe String -> String
+handleDescription s =
+    case s of
+        Just s ->
+            s
+
+        Nothing ->
+            ""
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -84,13 +94,24 @@ update msg model =
                 currentMap =
                     model.allTransactions
 
-                newModel =
-                    { model | allTransactions = addTransaction ( date, { id = model.currentUuid, amount = amt, category_id = cat, description = desc } ) currentMap }
+                id =
+                    model.currentUuid
 
-                -- url = "http://localhost:4567/transactions/new"
-                -- request = Http.post url functionToConvertTransToJSON
+                newModel =
+                    { model | allTransactions = addTransaction ( date, { id = id, amount = amt, category_id = cat, description = desc } ) currentMap }
+
+                ( newModelWithNewUuid, cmds ) =
+                    update NewUuid newModel
+
+                transactionToSave =
+                    { id = id
+                    , amount = amt
+                    , date = date
+                    , description = handleDescription desc
+                    , category_id = cat
+                    }
             in
-                update NewUuid newModel
+                ( newModelWithNewUuid, Cmd.batch [ persistNewTransaction transactionToSave, cmds ] )
 
 
 
@@ -124,6 +145,9 @@ deleteRowFromDay id ( date, transactions ) =
 getFirstPart : ( List a, List b ) -> List a
 getFirstPart ( listA, listB ) =
     listA
+
+
+port persistNewTransaction : TransactionWithDate -> Cmd msg
 
 
 addTransaction : ( DateAsInt, Transaction ) -> Map DateAsInt Transactions -> Map DateAsInt Transactions

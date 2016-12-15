@@ -35,74 +35,40 @@ get '/transactions/?' do
 end
 
 get '/transactions/:date1..:date2/?' do
-  TransactionsController.new.range_of_dates(params[:date1], params[:date2])
+  TransactionsController.new.show_range_of_dates(params[:date1], params[:date2])
 end
 
 get '/transactions/:date/?' do
-  TransactionsController.new.one_day(:date)
+  TransactionsController.new.show_one_day(params[:date])
 end
 
-get '/categories/?' do
+get '/categories' do
   CatgoriesController.new.index
 end
 
-get '/categories/:id/?' do
+get '/categories/:id' do
   CatgoriesController.new.show(params[:id])
-end
-
-def verify_transaction_post(payload)
-  keys = payload.keys - [:description]
-  keys.each do |key|
-    raise 'Oh no, nil value!' if payload[key].nil?
-  end
-end
-
-def verify_category_post(payload)
-  payload.keys.each do |key|
-    raise 'Oh no, nil value!' if payload[key].nil?
-  end
 end
 
 post '/transactions/new' do
   request.body.rewind
   payload = JSON.parse(request.body.read)
-  data = Helpers.symbolize_keys(payload)
-
   begin
-    verify_transaction_post(data)
-    data[:date] = data[:date].to_i
-    data[:category_id] = data[:category_id].to_i
-    data[:amount] = BigDecimal(data[:amount])
-    Transaction.insert(
-      id:          data[:id],
-      date:        data[:date],
-      amount:      data[:amount],
-      category_id: data[:category_id],
-      description: data[:description],
-    )
+    TransactionsController.new.create(payload)
   rescue StandardError => error
     status 400
     error.message
-  else
   end
 end
 
 post '/categories/new' do
   request.body.rewind
   payload = JSON.parse(request.body.read)
-  data = Helpers.symbolize_keys(payload)
   begin
-    verify_category_post(data)
-    data[:id] = data[:id].to_i
-    Category.insert(
-      id:   data[:id],
-      name: data[:name],
-    )
+    CatgoriesController.new.create(payload)
   rescue StandardError => error
     status 400
     error.message
-  else
-    data.inspect
   end
 end
 

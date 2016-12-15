@@ -3,6 +3,15 @@ module Modules.Transaction exposing (..)
 import Modules.DateAsInt exposing (..)
 
 
+type alias TransactionWithDate =
+    { id : String
+    , amount : Float
+    , date : Int
+    , description : String
+    , category_id : Int
+    }
+
+
 type alias Transaction =
     { id : String
     , amount : Float

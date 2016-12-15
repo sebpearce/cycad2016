@@ -9,9 +9,9 @@ var SERVER_HOSTNAME = 'http://localhost:4567';
 
 function postJSON(url, data) {
   data = data || {
-    id: 'test-id-again-2',
+    id: 'test-id-again-5',
     date: '20161217',
-    amount: '2222',
+    amount: '9999',
     desc: 'lulz',
     category_id: '1',
   };
@@ -137,10 +137,21 @@ function parseAmounts(transactions) {
     var elmApp = Elm.Main.embed(mountNode, startingState);
 
     elmApp.ports.setStorage.subscribe(function (state) {
-      localStorage.setItem('appState', JSON.stringify(state));
-      postJSON();
+      // localStorage.setItem('appState', JSON.stringify(state));
+      console.log(state);
+      // postJSON();
       // getJSON();
-    })
+    });
+
+    elmApp.ports.persistNewTransaction.subscribe(function (json) {
+      // localStorage.setItem('appState', JSON.stringify(state));
+      // console.log(JSON.stringify(state));
+      // do this with elm json.decode instead of js json.stringify:
+      console.log(json);
+      console.log(typeof json);
+      postJSON(SERVER_HOSTNAME + '/transactions/new', json);
+      // getJSON();
+    });
   };
   xhr.send();
 })();
