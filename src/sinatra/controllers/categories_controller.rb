@@ -19,7 +19,7 @@ class CatgoriesController
       id:   data[:id],
       name: data[:name],
     )
-    data.inspect
+    data.inspect.to_json
   end
 
   private

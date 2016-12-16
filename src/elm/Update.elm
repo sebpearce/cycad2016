@@ -4,6 +4,9 @@ import Modules.Map exposing (..)
 import Model exposing (..)
 import Msg exposing (..)
 import Dict
+import Http
+import Json.Encode
+import Json.Decode exposing (list, string)
 import Modules.Transaction exposing (..)
 import Modules.DateAsInt exposing (..)
 import Random.Pcg exposing (Seed, initialSeed, step)
@@ -110,12 +113,35 @@ update msg model =
                     , description = handleDescription desc
                     , category_id = cat
                     }
+
+                path =
+                    "http://localhost:4567/transactions/new"
             in
-                ( newModelWithNewUuid, Cmd.batch [ persistNewTransaction transactionToSave, cmds ] )
+                ( newModelWithNewUuid, persistRow transactionToSave path )
+
+        TransactionPersisted (Ok response) ->
+            ( model, consoleLog <| Json.Encode.string <| toString response )
+
+        TransactionPersisted (Err error) ->
+            ( model, consoleLog <| Json.Encode.string <| toString error )
 
 
+persistRow : TransactionWithDate -> String -> Cmd Msg
+persistRow twd path =
+    let
+        payload =
+            Json.Encode.object
+                [ ( "id", Json.Encode.string twd.id )
+                , ( "amount", Json.Encode.float twd.amount )
+                , ( "date", Json.Encode.int twd.date )
+                , ( "description", Json.Encode.string twd.description )
+                , ( "category_id", Json.Encode.int twd.category_id )
+                ]
 
--- Http.send MsgThatTakesResult request
+        request =
+            (Http.post path (Http.jsonBody payload) (Json.Decode.succeed "OK"))
+    in
+        Http.send TransactionPersisted request
 
 
 deleteRowFromTransactions : String -> Map DateAsInt Transactions -> Map DateAsInt Transactions
@@ -145,6 +171,9 @@ deleteRowFromDay id ( date, transactions ) =
 getFirstPart : ( List a, List b ) -> List a
 getFirstPart ( listA, listB ) =
     listA
+
+
+port consoleLog : Json.Encode.Value -> Cmd msg
 
 
 port persistNewTransaction : TransactionWithDate -> Cmd msg

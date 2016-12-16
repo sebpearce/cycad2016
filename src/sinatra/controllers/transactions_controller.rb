@@ -32,7 +32,7 @@ class TransactionsController
       category_id: data[:category_id],
       description: data[:description],
     )
-    data.inspect
+    data.inspect.to_json
   end
 
   private

@@ -152,6 +152,11 @@ function parseAmounts(transactions) {
       postJSON(SERVER_HOSTNAME + '/transactions/new', json);
       // getJSON();
     });
+
+    elmApp.ports.consoleLog.subscribe(function (json) {
+      console.log(json);
+    });
+
   };
   xhr.send();
 })();

@@ -1,6 +1,7 @@
 module Msg exposing (..)
 
 import Modules.DateAsInt exposing (..)
+import Http
 
 
 type Msg
@@ -8,6 +9,7 @@ type Msg
     | Save
     | DeleteTransaction String
     | AddTransaction ( DateAsInt, Float, Int, Maybe String )
+    | TransactionPersisted (Result Http.Error String)
     | UpdateCapturedDate String
     | UpdateCapturedAmt String
     | UpdateCapturedDesc String
