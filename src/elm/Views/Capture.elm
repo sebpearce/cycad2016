@@ -1,9 +1,10 @@
-module Modules.Capture exposing (..)
+module Views.Capture exposing (..)
 
 import Model exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Msg exposing (..)
+import Dict
 
 
 -- import Dict exposing (..)
@@ -30,20 +31,33 @@ renderCapture model =
             , div [ class "capture__pickers-container" ]
                 [ div [ class "capture__category-picker" ]
                     [ div [ class "capture__category-picker__label" ] [ text "Category" ]
-                    , input [ class "capture__category-picker__input", value "gr" ] []
+                    , input [ tabindex 1, class "capture__category-picker__input", value "gr" ] []
                     ]
                 , div [ class "capture__amount-picker" ]
                     [ div [ class "capture__amount-picker__label" ] [ text "Amount" ]
-                    , input [ class "capture__amount-picker__input", value "17.99" ] []
+                    , input [ tabindex 2, class "capture__amount-picker__input", value "17.99" ] []
                     ]
                 ]
-            , div [ class "capture__category-options" ]
-                [ div [ class "capture__category-options__item -hover" ] [ text "groceries" ]
-                , div [ class "capture__category-options__item" ] [ text "grapes" ]
-                , div [ class "capture__category-options__item" ] [ text "gifts" ]
-                ]
+            , renderCaptureOptions model
             ]
         ]
+
+
+renderCaptureOptions : Model -> Html Msg
+renderCaptureOptions model =
+    let
+        categories =
+            List.map (\( _, cat ) -> cat) (Dict.toList model.categories)
+
+        items =
+            List.map renderCaptureOptionsItem categories
+    in
+        div [ class "capture__category-options" ] items
+
+
+renderCaptureOptionsItem : String -> Html Msg
+renderCaptureOptionsItem category =
+    div [ class "capture__category-options__item" ] [ text category ]
 
 
 

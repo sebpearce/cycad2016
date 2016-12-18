@@ -1,8 +1,10 @@
 // define palette here
-$palette--dark-grey: #3B3E41;
-$palette--soft-blue: #5D758E;
-$palette--green: hsl(100,60%,40%);
-$palette--bright-blue: hsl(208,70%,55%);
+// $palette--dark-grey: #3B3E41;
+// $palette--soft-blue: #5D758E;
+$palette--dark-grey:   hsl(210,10%,28%);
+$palette--soft-blue:   hsl(210,21%,46%);
+$palette--bright-blue: hsl(210,70%,60%);
+$palette--green:       hsl(100,60%,40%);
 
 $base-text-color: $palette--dark-grey;
 $base-font-family: 'Open Sans';

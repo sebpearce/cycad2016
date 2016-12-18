@@ -1,4 +1,4 @@
-module Modules.TransactionsTable exposing (..)
+module Views.TransactionsTable exposing (..)
 
 import Model exposing (..)
 import Html exposing (..)

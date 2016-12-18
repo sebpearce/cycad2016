@@ -1,4 +1,4 @@
-module Modules.Sidebar exposing (renderSidebar)
+module Views.Sidebar exposing (renderSidebar)
 
 import Model exposing (..)
 import Html exposing (..)

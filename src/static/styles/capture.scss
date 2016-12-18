@@ -1,4 +1,6 @@
-$capture-base-text-color: hsl(200,10%,35%);
+// $capture-base-text-color: hsl(200,10%,35%);
+// $capture-base-text-color: mix(#fff, $palette--dark-grey, 50%);
+$capture-base-text-color: $palette--dark-grey;
 
 .capture-container {
   margin-bottom: 25px;
@@ -35,9 +37,9 @@ $capture-base-text-color: hsl(200,10%,35%);
 
 .capture__date-picker__cell {
   box-sizing: border-box;
-  $date-picker-cell-bg: hsl(0,0%,97%);
-  $date-picker-cell-color: mix(#fff, $capture-base-text-color, 50%);
-  $date-picker-cell-border: 1px solid hsl(0,0%,80%);
+  $date-picker-cell-bg: mix(#fff, $palette--dark-grey, 96%);
+  $date-picker-cell-color: mix(#fff, $palette--dark-grey, 50%);
+  $date-picker-cell-border: 1px solid mix(#fff, $palette--dark-grey, 66%);
   display: flex;
   flex-basis: 12.5%;
   align-items: center;
@@ -51,7 +53,7 @@ $capture-base-text-color: hsl(200,10%,35%);
   border-radius: 5px;
 
   + .-active {
-    color: mix(#000, $date-picker-cell-color, 60%);
+    color: $capture-base-text-color;
     background: #fff;
     border: 2px solid $palette--bright-blue;
     box-shadow: 0 0 5px #ccc;
@@ -80,7 +82,7 @@ $capture-base-text-color: hsl(200,10%,35%);
     $picker-color: $capture-base-text-color;
     box-sizing: border-box;
     border-radius: 5px;
-    border: 1px solid hsl(0,0%,70%);
+    border: 1px solid mix(#fff, $palette--dark-grey, 46%);;
     font-size: $picker-font-size;
     width: 94%;
     padding: 10px 12px;
@@ -115,15 +117,19 @@ $capture-base-text-color: hsl(200,10%,35%);
 }
 
 .capture__category-options__item {
-  $capture-category-options-bg: $palette--bright-blue;
   font-weight: $weight--bold;
   padding: 3px 15px;
   border-radius: 3px;
+
+  &:hover {
+    background: $palette--bright-blue;
+    color: #fff;
+    cursor: pointer;
+  }
 }
 
 .capture__category-options__item.-hover {
-  $capture-category-options-bg: $palette--bright-blue;
-  background: $capture-category-options-bg;
+  background: $palette--bright-blue;
   color: #fff;
 }
 
