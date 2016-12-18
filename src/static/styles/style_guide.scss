@@ -1,12 +1,14 @@
 // define palette here
 $palette--dark-grey: #3B3E41;
 $palette--soft-blue: #5D758E;
+$palette--green: hsl(100,60%,40%);
+$palette--bright-blue: hsl(208,70%,55%);
 
 $base-text-color: $palette--dark-grey;
 $base-font-family: 'Open Sans';
 $base-line-height: 1.5;
 
-$color--positive: hsl(100,60%,40%);
+$color--positive: $palette--green;
 $color--negative: $base-text-color;
 
 $color--link: #00f;
@@ -22,7 +24,7 @@ $weight--heavy: 700;
 $weight--bold: 600;
 $weight--light: 300;
 
-$font-size--small: 16px;
+$font-size--small: 14px;
 $font-size--medium: 21px;
 $font-size--large: 28px;
 

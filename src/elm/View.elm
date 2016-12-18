@@ -15,7 +15,8 @@ view model =
     div [ class "main-container" ]
         [ renderSidebar model
         , div [ class "content__container" ]
-            [ button
+            [ renderCapture model
+            , button
                 [ onClick (DeleteTransaction "4") ]
                 [ text "Delete!" ]
             , button

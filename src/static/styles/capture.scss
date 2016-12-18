@@ -1,0 +1,130 @@
+$capture-base-text-color: hsl(200,10%,35%);
+
+.capture-container {
+  margin-bottom: 25px;
+}
+
+.capture {
+  display: inline-block;
+  padding: 20px 25px;
+  box-shadow: 0 0 10px #aaa;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  width: 500px;
+  color: $capture-base-text-color;
+}
+
+.capture__tips {
+  text-align: right;
+  font-size: ($font-size--small * 0.9);
+  color: #ccc;
+}
+
+.capture__date-display {
+  font-size: $font-size--medium;
+  font-weight: $weight--heavy;
+  text-align: right;
+}
+
+.capture__date-picker {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.capture__date-picker__cell {
+  box-sizing: border-box;
+  $date-picker-cell-bg: hsl(0,0%,97%);
+  $date-picker-cell-color: mix(#fff, $capture-base-text-color, 50%);
+  $date-picker-cell-border: 1px solid hsl(0,0%,80%);
+  display: flex;
+  flex-basis: 12.5%;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-size: $font-size--small;
+  font-weight: $weight--bold;
+  color: $date-picker-cell-color;
+  background: $date-picker-cell-bg;
+  border: $date-picker-cell-border;
+  border-radius: 5px;
+
+  + .-active {
+    color: mix(#000, $date-picker-cell-color, 60%);
+    background: #fff;
+    border: 2px solid $palette--bright-blue;
+    box-shadow: 0 0 5px #ccc;
+  }
+}
+
+.capture__pickers-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+%capture__picker {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  [class$="__label"] {
+    font-size: $font-size--small;
+    font-weight: $weight--bold;
+    margin-bottom: 5px;
+  }
+
+  input {
+    $picker-font-size: $font-size--large;
+    $picker-color: $capture-base-text-color;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid hsl(0,0%,70%);
+    font-size: $picker-font-size;
+    width: 94%;
+    padding: 10px 12px;
+    font-family: $base-font-family;
+    color: $picker-color;
+
+    &:focus {
+      outline: none;
+      border-color: $palette--bright-blue;
+      box-shadow: inset 0 0 3px #ccc;
+    }
+  }
+}
+
+.capture__category-picker {
+  @extend %capture__picker;
+}
+
+.capture__amount-picker {
+  @extend %capture__picker;
+  text-align: right;
+  input {
+    margin-left: auto;
+    text-align: right;
+  }
+}
+
+.capture__category-options {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+
+.capture__category-options__item {
+  $capture-category-options-bg: $palette--bright-blue;
+  font-weight: $weight--bold;
+  padding: 3px 15px;
+  border-radius: 3px;
+}
+
+.capture__category-options__item.-hover {
+  $capture-category-options-bg: $palette--bright-blue;
+  background: $capture-category-options-bg;
+  color: #fff;
+}
+
+
