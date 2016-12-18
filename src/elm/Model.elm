@@ -14,6 +14,7 @@ type alias Model =
     , capturedAmt : Float
     , capturedDesc : Maybe String
     , capturedCat : Int
+    , capturedCatSearchInput : String
     , currentSeed : Seed
     , currentUuid : String
     }

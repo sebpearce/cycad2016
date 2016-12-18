@@ -113,7 +113,8 @@ $capture-base-text-color: $palette--dark-grey;
 .capture__category-options {
   display: flex;
   flex-direction: column;
-  padding-top: 10px;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
 .capture__category-options__item {

@@ -86,6 +86,9 @@ update msg model =
         UpdateCapturedCat strCat ->
             { model | capturedCat = String.toInt strCat |> Result.withDefault 0 } ! []
 
+        UpdateCategorySearch input ->
+            { model | capturedCatSearchInput = input } ! []
+
         DeleteTransaction id ->
             let
                 currentMap =

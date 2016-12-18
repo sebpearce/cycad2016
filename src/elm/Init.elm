@@ -32,6 +32,7 @@ init flags =
             , capturedAmt = 999
             , capturedDesc = Just "foo"
             , capturedCat = 2
+            , capturedCatSearchInput = ""
             , currentSeed = initialSeed seed
             , currentUuid = ""
             }

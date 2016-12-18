@@ -15,4 +15,5 @@ type Msg
     | UpdateCapturedAmt String
     | UpdateCapturedDesc String
     | UpdateCapturedCat String
+    | UpdateCategorySearch String
     | NewUuid

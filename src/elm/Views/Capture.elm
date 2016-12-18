@@ -5,12 +5,11 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Msg exposing (..)
 import Dict
+import Html.Events exposing (onInput)
 
 
--- import Dict exposing (..)
 -- import Modules.Helpers exposing (renderDate, renderAmount, formatAsMoney, applyColor)
 -- import Modules.Transaction exposing (..)
--- import Html.Events exposing (onClick)
 
 
 renderCapture : Model -> Html Msg
@@ -31,7 +30,7 @@ renderCapture model =
             , div [ class "capture__pickers-container" ]
                 [ div [ class "capture__category-picker" ]
                     [ div [ class "capture__category-picker__label" ] [ text "Category" ]
-                    , input [ tabindex 1, class "capture__category-picker__input", value "gr" ] []
+                    , input [ autofocus True, tabindex 1, class "capture__category-picker__input", onInput UpdateCategorySearch ] []
                     ]
                 , div [ class "capture__amount-picker" ]
                     [ div [ class "capture__amount-picker__label" ] [ text "Amount" ]
@@ -49,15 +48,26 @@ renderCaptureOptions model =
         categories =
             List.map (\( _, cat ) -> cat) (Dict.toList model.categories)
 
+        filteredCategories =
+            getMatchingCategories categories model.capturedCatSearchInput
+
         items =
-            List.map renderCaptureOptionsItem categories
+            List.map renderCaptureOptionsItem filteredCategories
+
+        output =
+            div [ class "capture__category-options" ] items
     in
-        div [ class "capture__category-options" ] items
+        output
 
 
 renderCaptureOptionsItem : String -> Html Msg
 renderCaptureOptionsItem category =
     div [ class "capture__category-options__item" ] [ text category ]
+
+
+getMatchingCategories : List String -> String -> List String
+getMatchingCategories allCats pattern =
+    List.filter (\c -> String.contains (String.toLower pattern) (String.toLower c) == True) allCats
 
 
 
