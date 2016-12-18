@@ -22,21 +22,21 @@ class JSONFormatter
     def prepare_transactions(transactions)
       list_of_days = transactions.group_by { |transaction| transaction[:date] }
 
-      if list_of_days.size > 1
-        list_of_days.keys.map do |day|
-          [
-            day,
-            list_of_days[day].map do |x|
-              x.tap { |t| t.delete(:date) }
-            end
-          ]
-        end
-      else
-        date = list_of_days.keys[0]
-        list_of_days[date].map do |transaction|
-          transaction.tap { |t| t.delete(:date) }
-        end
+      # if list_of_days.size > 1
+      list_of_days.keys.map do |day|
+        [
+          day,
+          list_of_days[day].map do |x|
+            x.tap { |t| t.delete(:date) }
+          end
+        ]
       end
+      # else
+      #   date = list_of_days.keys[0]
+      #   list_of_days[date].map do |transaction|
+      #     transaction.tap { |t| t.delete(:date) }
+      #   end
+      # end
     end
 
     def prepare_categories(categories)

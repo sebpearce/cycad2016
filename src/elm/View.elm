@@ -7,6 +7,7 @@ import Html.Events exposing (onClick, onInput)
 import Msg exposing (..)
 import Modules.TransactionsTable exposing (renderTransactionsTable)
 import Modules.Sidebar exposing (renderSidebar)
+import Modules.Capture exposing (renderCapture)
 
 
 view : Model -> Html Msg

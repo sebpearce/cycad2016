@@ -4,7 +4,7 @@ require_relative '../services/json_formatter'
 
 class RootController
   def index
-    transactions_query = Transaction.all.map(&:values)
+    transactions_query = Transaction.order(:date).all.map(&:values)
     categories_query = Category.all.map(&:values)
     if transactions_query.empty? || categories_query.empty?
       "Failed to load initial state."

@@ -1,5 +1,6 @@
 require 'json'
 require 'sinatra'
+require 'pry'
 
 require_relative '../helpers/helpers'
 require_relative '../models/transaction'
@@ -32,7 +33,13 @@ class TransactionsController
       category_id: data[:category_id],
       description: data[:description],
     )
-    data.inspect.to_json
+    data.to_json
+  end
+
+  def delete(payload)
+    data = Helpers.symbolize_keys(payload)
+    Transaction.where(id: data[:id]).delete
+    data.to_json
   end
 
   private

@@ -4,13 +4,14 @@ import Modules.Map exposing (..)
 import Model exposing (..)
 import Msg exposing (..)
 import Dict
-import Http
+import Http exposing (..)
 import Json.Encode
 import Json.Decode exposing (list, string)
 import Modules.Transaction exposing (..)
 import Modules.DateAsInt exposing (..)
 import Random.Pcg exposing (Seed, initialSeed, step)
 import Uuid.Barebones exposing (uuidStringGenerator, isValidUuid)
+import Config
 
 
 type alias SaveFormat =
@@ -89,8 +90,20 @@ update msg model =
             let
                 currentMap =
                     model.allTransactions
+
+                newModel =
+                    { model | allTransactions = deleteRowFromTransactions id currentMap }
+
+                path =
+                    Config.serverPath ++ Config.deleteTransPath
             in
-                { model | allTransactions = deleteRowFromTransactions id currentMap } ! []
+                ( newModel, deleteRowFromDB id path )
+
+        TransactionDeleted (Ok response) ->
+            ( model, consoleLog <| Json.Encode.string <| toString response )
+
+        TransactionDeleted (Err error) ->
+            ( model, consoleLog <| Json.Encode.string <| toString error )
 
         AddTransaction ( date, amt, cat, desc ) ->
             let
@@ -115,7 +128,7 @@ update msg model =
                     }
 
                 path =
-                    "http://localhost:4567/transactions/new"
+                    Config.serverPath ++ Config.addTransPath
             in
                 ( newModelWithNewUuid, persistRow transactionToSave path )
 
@@ -142,6 +155,18 @@ persistRow twd path =
             (Http.post path (Http.jsonBody payload) (Json.Decode.succeed "OK"))
     in
         Http.send TransactionPersisted request
+
+
+deleteRowFromDB : TransactionId -> String -> Cmd Msg
+deleteRowFromDB id path =
+    let
+        payload =
+            Json.Encode.object [ ( "id", Json.Encode.string id ) ]
+
+        request =
+            (Http.post path (Http.jsonBody payload) (Json.Decode.succeed "OK"))
+    in
+        Http.send TransactionDeleted request
 
 
 deleteRowFromTransactions : String -> Map DateAsInt Transactions -> Map DateAsInt Transactions

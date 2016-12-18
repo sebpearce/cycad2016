@@ -1,3 +1,4 @@
+require 'pry'
 require 'sinatra'
 require 'sequel'
 require 'json'
@@ -25,6 +26,9 @@ before do
   headers 'Access-Control-Allow-Origin' => '*'
   content_type :json
 end
+
+# Sequel command cheat sheet:
+# http://sequel.jeremyevans.net/rdoc/files/doc/cheat_sheet_rdoc.html
 
 get '/?' do
   RootController.new.index
@@ -55,6 +59,17 @@ post '/transactions/new' do
   payload = JSON.parse(request.body.read)
   begin
     TransactionsController.new.create(payload)
+  rescue StandardError => error
+    status 400
+    error.message
+  end
+end
+
+post '/transactions/delete' do
+  request.body.rewind
+  payload = JSON.parse(request.body.read)
+  begin
+    TransactionsController.new.delete(payload)
   rescue StandardError => error
     status 400
     error.message
