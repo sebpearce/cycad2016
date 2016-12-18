@@ -141,6 +141,12 @@ update msg model =
         TransactionPersisted (Err error) ->
             ( model, consoleLog <| Json.Encode.string <| toString error )
 
+        CategoryInputKeyDown key ->
+            if key == 13 then
+                ( model, Cmd.none )
+            else
+                ( model, Cmd.none )
+
 
 persistRow : TransactionWithDate -> String -> Cmd Msg
 persistRow twd path =

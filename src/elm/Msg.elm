@@ -17,3 +17,4 @@ type Msg
     | UpdateCapturedCat String
     | UpdateCategorySearch String
     | NewUuid
+    | CategoryInputKeyDown Int

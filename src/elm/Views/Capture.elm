@@ -6,6 +6,7 @@ import Html.Attributes exposing (..)
 import Msg exposing (..)
 import Dict
 import Html.Events exposing (onInput)
+import Modules.OnKeyDown exposing (onKeyDown)
 
 
 -- import Modules.Helpers exposing (renderDate, renderAmount, formatAsMoney, applyColor)
@@ -30,7 +31,7 @@ renderCapture model =
             , div [ class "capture__pickers-container" ]
                 [ div [ class "capture__category-picker" ]
                     [ div [ class "capture__category-picker__label" ] [ text "Category" ]
-                    , input [ autofocus True, tabindex 1, class "capture__category-picker__input", onInput UpdateCategorySearch ] []
+                    , input [ autofocus True, tabindex 1, class "capture__category-picker__input", onInput UpdateCategorySearch, onKeyDown CategoryInputKeyDown ] []
                     ]
                 , div [ class "capture__amount-picker" ]
                     [ div [ class "capture__amount-picker__label" ] [ text "Amount" ]
