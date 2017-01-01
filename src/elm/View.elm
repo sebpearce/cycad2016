@@ -19,13 +19,13 @@ view model =
             , button
                 [ onClick (DeleteTransaction "4") ]
                 [ text "Delete!" ]
-            , button
-                [ onClick (AddTransaction ( model.capturedDate, model.capturedAmt, model.capturedCat, model.capturedDesc )) ]
-                [ text "Add!" ]
-            , input [ onInput UpdateCapturedDate ] []
-            , input [ onInput UpdateCapturedAmt ] []
-            , input [ onInput UpdateCapturedDesc ] []
-            , input [ onInput UpdateCapturedCat ] []
+              -- , button
+              --     [ onClick (AddTransaction ( model.capturedDate, model.capturedAmt, model.capturedCat, model.capturedDesc )) ]
+              --     [ text "Add!" ]
+              -- , input [ onInput UpdateCapturedDate ] []
+              -- , input [ onInput UpdateCapturedAmt ] []
+              -- , input [ onInput UpdateCapturedDesc ] []
+              -- , input [ onInput UpdateCapturedCat ] []
             , button
                 [ onClick NewUuid ]
                 [ text "Generate!" ]

@@ -14,7 +14,13 @@ type Msg
     | UpdateCapturedDate String
     | UpdateCapturedAmt String
     | UpdateCapturedDesc String
-    | UpdateCapturedCat String
+      -- | UpdateCapturedCat String
+    | UpdateCapturedCatId Int
+    | ClickedCategoryOption Int String
     | UpdateCategorySearch String
     | NewUuid
     | CategoryInputKeyDown Int
+
+
+
+-- | FocusOnElement String

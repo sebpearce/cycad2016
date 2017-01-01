@@ -12,6 +12,8 @@ import Modules.DateAsInt exposing (..)
 import Random.Pcg exposing (Seed, initialSeed, step)
 import Uuid.Barebones exposing (uuidStringGenerator, isValidUuid)
 import Config
+import Dom
+import Task
 
 
 type alias SaveFormat =
@@ -83,12 +85,21 @@ update msg model =
         UpdateCapturedDesc strDesc ->
             { model | capturedDesc = convertStringToMaybe strDesc } ! []
 
-        UpdateCapturedCat strCat ->
-            { model | capturedCat = String.toInt strCat |> Result.withDefault 0 } ! []
-
+        -- UpdateCapturedCat strCat ->
+        --     { model | capturedCat = String.toInt strCat |> Result.withDefault 0 } ! []
         UpdateCategorySearch input ->
             { model | capturedCatSearchInput = input } ! []
 
+        UpdateCapturedCatId id ->
+            { model | capturedCatId = id } ! []
+
+        ClickedCategoryOption id name ->
+            ( { model | capturedCatSearchInput = name, capturedCatId = id }, Cmd.none )
+
+        -- ClickedCategoryOption id name ->
+        --     ( { model | capturedCatSearchInput = name, capturedCatId = id }, (Dom.focus "capture__amount-picker__input") )
+        -- FocusOnElement id ->
+        --     ( model, Dom.focus id )
         DeleteTransaction id ->
             let
                 currentMap =

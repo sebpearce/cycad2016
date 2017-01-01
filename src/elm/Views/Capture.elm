@@ -5,12 +5,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Msg exposing (..)
 import Dict
-import Html.Events exposing (onInput)
+import Html.Events exposing (onInput, onClick, onMouseOver)
 import Modules.OnKeyDown exposing (onKeyDown)
-
-
--- import Modules.Helpers exposing (renderDate, renderAmount, formatAsMoney, applyColor)
--- import Modules.Transaction exposing (..)
 
 
 renderCapture : Model -> Html Msg
@@ -32,14 +28,17 @@ renderCapture model =
                 , div [ class "capture__pickers-container" ]
                     [ div [ class "capture__category-picker" ]
                         [ div [ class "capture__category-picker__label" ] [ text "Category" ]
-                        , input [ autofocus True, tabindex 1, class "capture__category-picker__input", onInput UpdateCategorySearch, onKeyDown CategoryInputKeyDown ] []
+                        , input [ autofocus True, tabindex 1, class "capture__category-picker__input", id "capture__category-picker__input", onInput UpdateCategorySearch, onKeyDown CategoryInputKeyDown, value model.capturedCatSearchInput ] []
                         ]
                     , div [ class "capture__amount-picker" ]
                         [ div [ class "capture__amount-picker__label" ] [ text "Amount" ]
-                        , input [ tabindex 2, class "capture__amount-picker__input", value "17.99" ] []
+                        , input [ tabindex 2, class "capture__amount-picker__input", id "capture__amount-picker__input", onInput UpdateCapturedAmt ] []
                         ]
                     ]
-                , renderCaptureOptions model
+                , if model.capturedCatSearchInput /= "" then
+                    renderCaptureOptions model
+                  else
+                    text ""
                 ]
             ]
         ]
@@ -49,7 +48,7 @@ renderCaptureOptions : Model -> Html Msg
 renderCaptureOptions model =
     let
         categories =
-            List.map (\( _, cat ) -> cat) (Dict.toList model.categories)
+            Dict.toList model.categories
 
         filteredCategories =
             getMatchingCategories categories model.capturedCatSearchInput
@@ -63,58 +62,11 @@ renderCaptureOptions model =
         output
 
 
-renderCaptureOptionsItem : String -> Html Msg
-renderCaptureOptionsItem category =
-    div [ class "capture__category-options__item" ] [ text category ]
+renderCaptureOptionsItem : ( Int, String ) -> Html Msg
+renderCaptureOptionsItem ( id, category ) =
+    div [ class "capture__category-options__item", onMouseOver (UpdateCapturedCatId id), onClick (ClickedCategoryOption id category) ] [ text (category) ]
 
 
-getMatchingCategories : List String -> String -> List String
+getMatchingCategories : List ( Int, String ) -> String -> List ( Int, String )
 getMatchingCategories allCats pattern =
-    List.filter (\c -> String.contains (String.toLower pattern) (String.toLower c) == True) allCats
-
-
-
--- categoryName : Maybe String -> String
--- categoryName category =
---     case category of
---         Just category ->
---             category
---
---         Nothing ->
---             ""
---
---
--- renderTransactionRow : Model -> Transaction -> Html Msg
--- renderTransactionRow model transaction =
---     div [ class "transactions-table__day__row", attribute "data-id" (toString transaction.id) ]
---         [ div [ class "transactions-table__day__row__cat" ] [ text (categoryName (Dict.get transaction.category_id model.categories)) ]
---         , div [ class ("transactions-table__day__row__amt" ++ applyColor transaction.amount) ] [ renderAmount transaction.amount ]
---         , div [ class "transactions-table__day__row__desc" ] [ text <| Maybe.withDefault "" transaction.description ]
---         , a [ class "transactions-table__day__row__delete-link", onClick (DeleteTransaction transaction.id) ] [ text "x" ]
---         ]
---
---
--- renderTransactionsForOneDay : Model -> TransactionsForOneDay -> Html Msg
--- renderTransactionsForOneDay model ( date, transactions ) =
---     let
---         oneDayOfTransactions =
---             List.map (renderTransactionRow model) transactions
---     in
---         if List.isEmpty transactions == True then
---             text ""
---         else
---             div [ class "transactions-table__day" ]
---                 [ div [ class "transactions-table__day__date" ] [ text (renderDate date) ]
---                 , div [ class "transactions-table__day__transactions" ]
---                     oneDayOfTransactions
---                 ]
---
---
--- renderTransactionsTable : Model -> Html Msg
--- renderTransactionsTable model =
---     let
---         renderedDays =
---             List.map (renderTransactionsForOneDay model) model.allTransactions.entries
---     in
---         div [ class "transactions-table__container" ]
---             [ div [ class "transactions-table" ] renderedDays ]
+    List.filter (\( i, c ) -> String.contains (String.toLower pattern) (String.toLower c) == True) allCats

@@ -30,9 +30,11 @@ init flags =
             , categories = Dict.fromList (flags.categories)
             , capturedDate = 20161027
             , capturedAmt = 999
-            , capturedDesc = Just "foo"
-            , capturedCat = 2
+            , capturedDesc =
+                Just "foo"
+                -- , capturedCat = 2
             , capturedCatSearchInput = ""
+            , capturedCatId = 2
             , currentSeed = initialSeed seed
             , currentUuid = ""
             }
