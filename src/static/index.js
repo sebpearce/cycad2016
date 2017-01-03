@@ -108,8 +108,12 @@ function parseAmounts(transactions) {
     //   // getJSON();
     // });
 
-    elmApp.ports.consoleLog.subscribe(function (json) {
+    elmApp.ports.consoleLog.subscribe(function(json) {
       console.log(json);
+    });
+
+    elmApp.ports.selectOnClick.subscribe(function(id) {
+      document.getElementById(id).select();
     });
 
   };

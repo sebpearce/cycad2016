@@ -25,6 +25,9 @@ type alias SaveFormat =
 port setStorage : SaveFormat -> Cmd msg
 
 
+port selectOnClick : String -> Cmd msg
+
+
 readAsInt : String -> Int
 readAsInt input =
     case String.toInt input of
@@ -157,6 +160,9 @@ update msg model =
                 ( model, Cmd.none )
             else
                 ( model, Cmd.none )
+
+        SelectOnClick elementId ->
+            ( model, selectOnClick elementId )
 
 
 persistRow : TransactionWithDate -> String -> Cmd Msg

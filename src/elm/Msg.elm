@@ -20,6 +20,7 @@ type Msg
     | UpdateCategorySearch String
     | NewUuid
     | CategoryInputKeyDown Int
+    | SelectOnClick String
 
 
 
